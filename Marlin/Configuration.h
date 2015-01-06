@@ -781,6 +781,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 
 
+// Send OK to PC, then wait OK_TIMEOUT ms before sending another 'OK', in case the first one was garbled.
+#define OK_TIMEOUT  250  
 
 
 

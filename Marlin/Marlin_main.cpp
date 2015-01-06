@@ -646,7 +646,7 @@ void loop()
           else
           {
             SERIAL_PROTOCOLLNPGM(MSG_OK);
-						previous_millis_ok = millis();
+            previous_millis_ok = millis();
           }
         }
         else
@@ -3163,7 +3163,7 @@ Sigma_Exit:
           SERIAL_PROTOCOL(": ");
           SERIAL_PROTOCOL(servos[servo_index].read());
           SERIAL_PROTOCOLLN("");
-					previous_millis_ok = millis();
+          previous_millis_ok = millis();
         }
       }
       break;
@@ -3238,7 +3238,7 @@ Sigma_Exit:
         SERIAL_PROTOCOL(" d:");
         SERIAL_PROTOCOL(unscalePID_d(bedKd));
         SERIAL_PROTOCOLLN("");
-				previous_millis_ok = millis();
+        previous_millis_ok = millis();
       }
       break;
     #endif //PIDTEMP
@@ -3529,7 +3529,7 @@ case 404:  //M404 Enter the nominal filament width (3mm, 1.75mm ) N<3.0> or disp
           SERIAL_ECHO_START;
           SERIAL_ECHOLNPGM(MSG_ZPROBE_ZOFFSET " " MSG_OK);
           SERIAL_PROTOCOLLN("");
-					previous_millis_ok = millis();
+          previous_millis_ok = millis();
         }
         else
         {
@@ -3934,7 +3934,7 @@ void ClearToSend()
     return;
   #endif //SDSUPPORT
   SERIAL_PROTOCOLLNPGM(MSG_OK);
-	previous_millis_ok = millis();
+  previous_millis_ok = millis();
 }
 
 void get_coordinates()
@@ -4362,9 +4362,9 @@ void manage_inactivity(bool ignore_stepper_queue/*=false*/) //default argument s
 
 	// If 'OK' is garbled on sending PC won't receive it.  Both machines will wait on each other forever.
 	// This resends OK if nothing is heard from PC for a while to avoid this bad case.
-  if( (millis() - previous_millis_ok) >  max_inactive_time/4 ) {
-		SERIAL_PROTOCOL(MSG_OK);
-		previous_millis_ok=millis();
+  if( (millis() - previous_millis_ok) > OK_TIMEOUT ) {
+    SERIAL_PROTOCOL(MSG_OK);
+    previous_millis_ok=millis();
   }
 
   if(stepper_inactive_time)  {
