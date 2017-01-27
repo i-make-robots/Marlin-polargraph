@@ -287,10 +287,10 @@ your extruder heater takes 2 minutes to hit the target on heating.
 
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
 const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Y_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool X_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Y_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
+const bool Y_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
 const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
 //#define DISABLE_MAX_ENDSTOPS
 //#define DISABLE_MIN_ENDSTOPS
@@ -314,7 +314,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
 #define INVERT_X_DIR false     // for Mendel set to false, for Orca set to true
-#define INVERT_Y_DIR true     // for Mendel set to true, for Orca set to false
+#define INVERT_Y_DIR false     // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR false     // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -323,7 +323,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // ENDSTOP SETTINGS:
 // Sets direction of endstops when homing; 1=MAX, -1=MIN
 #define X_HOME_DIR -1
-#define Y_HOME_DIR  1
+#define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 
 #define min_software_endstops true // If true, axis won't move to coordinates less than HOME_POS.
