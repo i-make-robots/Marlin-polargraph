@@ -69,7 +69,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(Marginally Clever, Makelangelo)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Marginally Clever Robots, Ltd.)" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -143,7 +143,7 @@
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "Polargraph"
+#define CUSTOM_MACHINE_NAME "Sixi 3"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -163,7 +163,7 @@
  *
  * :[3, 4, 5, 6]
  */
-#define LINEAR_AXES 3
+#define LINEAR_AXES 6
 
 /**
  * Axis codes for additional axes:
@@ -767,15 +767,15 @@
 // Specify here all the endstop connectors that are connected to any endstop or probe.
 // Almost all printers will be using one per axis. Probes will use one or more of the
 // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
-//#define USE_XMIN_PLUG
-//#define USE_YMIN_PLUG
-//#define USE_ZMIN_PLUG
-//#define USE_IMIN_PLUG
-//#define USE_JMIN_PLUG
-//#define USE_KMIN_PLUG
-#define USE_XMAX_PLUG
-#define USE_YMAX_PLUG
-#define USE_ZMAX_PLUG
+#define USE_XMIN_PLUG
+#define USE_YMIN_PLUG
+#define USE_ZMIN_PLUG
+#define USE_IMIN_PLUG
+#define USE_JMIN_PLUG
+#define USE_KMIN_PLUG
+//#define USE_XMAX_PLUG
+//#define USE_YMAX_PLUG
+//#define USE_ZMAX_PLUG
 //#define USE_IMAX_PLUG
 //#define USE_JMAX_PLUG
 //#define USE_KMAX_PLUG
@@ -859,9 +859,9 @@
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
-//#define I_DRIVER_TYPE  A4988
-//#define J_DRIVER_TYPE  A4988
-//#define K_DRIVER_TYPE  A4988
+#define I_DRIVER_TYPE  A4988
+#define J_DRIVER_TYPE  A4988
+#define K_DRIVER_TYPE  A4988
 //#define E0_DRIVER_TYPE A4988
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
@@ -920,7 +920,22 @@
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 160 }
 #if LINEAR_AXES == 6
 #undef DEFAULT_AXIS_STEPS_PER_UNIT
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 189,189,189,189,189,189 }
+
+// 200 motor steps per full turn (360/1.8 deg=200 steps;360/0.9 deg=400 steps)
+#  define STEPPER_MOTOR_STEPS_PER_FULL_TURN (200.0)
+// *54 input pulley of gearbox has 54 teeth
+// /20 output pulley of stepper motor
+#  define PULLEY_RATIO (54.0/20.0)
+// *70 -to-one gearbox ratio
+#  define GEARBOX_RATIO (70.0)
+// * full steps
+#  define MICROSTEPS (1.0)
+// which means
+#  define STEPS_PER_FULL_TURN (STEPPER_MOTOR_STEPS_PER_FULL_TURN * MICROSTEPS * PULLEY_RATIO * GEARBOX_RATIO)
+// which means... 105, actually.
+#  define STEPS_PER_DEGREE (STEPS_PER_FULL_TURN/360.0)
+
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE }
 #endif
 
 /**
@@ -928,10 +943,10 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 300 }
+#define DEFAULT_MAX_FEEDRATE          { 30, 30, 30 }
 #if LINEAR_AXES == 6
 #undef DEFAULT_MAX_FEEDRATE
-#define DEFAULT_MAX_FEEDRATE          { 5,10,15,25,25,25 }
+#define DEFAULT_MAX_FEEDRATE          { 5,5,5,5,5,5 }
 #endif
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
@@ -948,7 +963,7 @@
 #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 3000 }
 #if LINEAR_AXES == 6
 #undef DEFAULT_MAX_ACCELERATION
-#define DEFAULT_MAX_ACCELERATION      { 250, 250, 250, 250, 250, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 250, 250, 250, 250, 250, 250 }
 #endif
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
@@ -1318,23 +1333,17 @@
 // @section extruder
 
 #define DISABLE_E false             // Disable the extruder when not stepping
-#define DISABLE_INACTIVE_EXTRUDER   // Keep only the active extruder enabled
+//#define DISABLE_INACTIVE_EXTRUDER   // Keep only the active extruder enabled
 
 // @section machine
 
-#define IS_KINEMATIC 1
-#define IS_POLARGRAPH 1
-#define POLARGRAPH_MAX_BELT_LEN (1035.0)
-#define POLARGRAPH_MAX_BELT_LEN2 (POLARGRAPH_MAX_BELT_LEN*POLARGRAPH_MAX_BELT_LEN)
-#define DELTA_SEGMENTS_PER_SECOND 5
-
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR true
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
-//#define INVERT_I_DIR false
-//#define INVERT_J_DIR false
-//#define INVERT_K_DIR false
+#define INVERT_I_DIR false
+#define INVERT_J_DIR false
+#define INVERT_K_DIR false
 
 // @section extruder
 
@@ -1350,8 +1359,8 @@
 
 // @section homing
 
-#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.
-#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.
+//#define NO_MOTION_BEFORE_HOMING // Inhibit movement until all axes have been homed. Also enable HOME_AFTER_DEACTIVATE for extra safety.
+//#define HOME_AFTER_DEACTIVATE   // Require rehoming after steppers are deactivated. Also enable NO_MOTION_BEFORE_HOMING for extra safety.
 
 /**
  * Set Z_IDLE_HEIGHT if the Z-Axis moves on its own when steppers are disabled.
@@ -1367,9 +1376,9 @@
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
-#define X_HOME_DIR 1
-#define Y_HOME_DIR 1
-#define Z_HOME_DIR 1
+#define X_HOME_DIR -1
+#define Y_HOME_DIR -1
+#define Z_HOME_DIR -1
 #define I_HOME_DIR -1
 #define J_HOME_DIR -1
 #define K_HOME_DIR -1
@@ -1377,22 +1386,22 @@
 // @section machine
 
 // The size of the printable area
-#define X_BED_SIZE 650
-#define Y_BED_SIZE 1000
+#define X_BED_SIZE 0
+#define Y_BED_SIZE 0
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS -325
-#define X_MAX_POS 325
-#define Y_MIN_POS -500
-#define Y_MAX_POS 500
-#define Z_MIN_POS 0
-#define Z_MAX_POS 100
-#define I_MIN_POS 0
-#define I_MAX_POS 360
-#define J_MIN_POS 0
-#define J_MAX_POS 360
-#define K_MIN_POS 0
-#define K_MAX_POS 360
+#define X_MIN_POS -180
+#define X_MAX_POS 180
+#define Y_MIN_POS -180
+#define Y_MAX_POS 180
+#define Z_MIN_POS -180
+#define Z_MAX_POS 180
+#define I_MIN_POS -180
+#define I_MAX_POS 180
+#define J_MIN_POS -180
+#define J_MAX_POS 180
+#define K_MIN_POS -180
+#define K_MAX_POS 180
 
 /**
  * Software Endstops
