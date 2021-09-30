@@ -1731,6 +1731,7 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
+// For Makelangelo Polargraph this is the bottom-center of the Cartesian print area.
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS -482.65
 //#define MANUAL_Z_HOME_POS 0
