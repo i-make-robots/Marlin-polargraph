@@ -69,7 +69,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(Marginally Clever Robots, Ltd.)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Marginally Clever Robots, Sixi 3)" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -917,37 +917,21 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 160 }
-#if LINEAR_AXES == 6
-#undef DEFAULT_AXIS_STEPS_PER_UNIT
-
 // 200 motor steps per full turn (360/1.8 deg=200 steps;360/0.9 deg=400 steps)
-#  define STEPPER_MOTOR_STEPS_PER_FULL_TURN (200.0)
 // *54 input pulley of gearbox has 54 teeth
 // /20 output pulley of stepper motor
-#  define PULLEY_RATIO (54.0/20.0)
 // *70 -to-one gearbox ratio
-#  define GEARBOX_RATIO (70.0)
 // * full steps
-#  define MICROSTEPS (1.0)
 // which means
-#  define STEPS_PER_FULL_TURN (STEPPER_MOTOR_STEPS_PER_FULL_TURN * MICROSTEPS * PULLEY_RATIO * GEARBOX_RATIO)
 // which means... 105, actually.
-#  define STEPS_PER_DEGREE (STEPS_PER_FULL_TURN/360.0)
-
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE, STEPS_PER_DEGREE }
-#endif
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 105, 105, 105, 105, 105, 105 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 30, 30, 30 }
-#if LINEAR_AXES == 6
-#undef DEFAULT_MAX_FEEDRATE
-#define DEFAULT_MAX_FEEDRATE          { 5,5,5,5,5,5 }
-#endif
+#define DEFAULT_MAX_FEEDRATE          { 30, 30, 30, 30, 30, 30 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -960,11 +944,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 3000 }
-#if LINEAR_AXES == 6
-#undef DEFAULT_MAX_ACCELERATION
 #define DEFAULT_MAX_ACCELERATION      { 250, 250, 250, 250, 250, 250 }
-#endif
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1741,10 +1721,10 @@
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
 #define MANUAL_X_HOME_POS 0
-#define MANUAL_Y_HOME_POS 0
+#define MANUAL_Y_HOME_POS 270
 #define MANUAL_Z_HOME_POS 0
-#define MANUAL_I_HOME_POS 0
-#define MANUAL_J_HOME_POS 0
+#define MANUAL_I_HOME_POS 270
+#define MANUAL_J_HOME_POS 180
 #define MANUAL_K_HOME_POS 0
 
 /**
@@ -1762,11 +1742,7 @@
 #endif
 
 // Homing speeds (mm/min)
-#define HOMING_FEEDRATE_MM_M { (60*60), (60*60), (50*60) }
-#if LINEAR_AXES == 6
-#undef HOMING_FEEDRATE_MM_M
 #define HOMING_FEEDRATE_MM_M { (6*60), (12*60), (25*60), (50*60), (50*60), (50*60) }
-#endif
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
