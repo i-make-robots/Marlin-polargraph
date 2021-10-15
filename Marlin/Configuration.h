@@ -917,13 +917,13 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-// 200 motor steps per full turn (360/1.8 deg=200 steps;360/0.9 deg=400 steps)
+// 70 -to-one gearbox ratio
 // *54 input pulley of gearbox has 54 teeth
 // /20 output pulley of stepper motor
-// *70 -to-one gearbox ratio
-// * full steps
-// which means
-// which means... 105, actually.
+// *1 full steps
+// *200 motor steps per full turn (360/1.8 deg=200 steps;360/0.9 deg=400 steps)
+// /360
+// which means 189 * 200/360 = 105
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 105, 105, 105, 105, 105, 105 }
 
 /**
@@ -931,7 +931,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 30, 30, 30, 30, 30, 30 }
+#define DEFAULT_MAX_FEEDRATE          { 6,6,6,6,6,6 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
